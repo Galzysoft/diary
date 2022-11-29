@@ -21,7 +21,7 @@ class SignupPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 100,
+                  height: 30,
                 ),
                 Text(
                   "Sign Up",
@@ -35,6 +35,10 @@ class SignupPage extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
 
                   decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepOrange,width: 2),
+                          borderRadius: BorderRadius.circular(20)),
+
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       fillColor: Colors.black54,
@@ -49,6 +53,10 @@ class SignupPage extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
 
                   decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepOrange,width: 2),
+                          borderRadius: BorderRadius.circular(20)),
+
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       fillColor: Colors.black54,
@@ -60,7 +68,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(
                   width: 300,
                   child: ElevatedButton(onPressed: () {
-                    logic.signUp();
+                    logic.signUp(context: context);
 
                   }, child: Text("Sign Up")),
                 )

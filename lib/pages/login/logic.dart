@@ -7,11 +7,11 @@ import 'state.dart';
 class LoginLogic extends GetxController {
   final LoginState state = LoginState();
 
-  Future Login({required String email, required String password}) async {
+  Future Login({required String email, required String password,required BuildContext context}) async {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green,
           content: ListTile(
             leading: Icon(Icons.done_all_sharp,),
@@ -20,7 +20,7 @@ class LoginLogic extends GetxController {
     } on FirebaseAuthException catch (e) {
       if (e .code == 'user-not-found') {
         print('No user found for that email.');
-        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
             content: ListTile(
               leading: Icon(Icons.error_outline,),
@@ -29,7 +29,7 @@ class LoginLogic extends GetxController {
 
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
-        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
             content: ListTile(
               leading: Icon(Icons.error_outline,),

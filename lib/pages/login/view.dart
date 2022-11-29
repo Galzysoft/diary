@@ -38,6 +38,12 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+
+
+                          borderSide: BorderSide(color: Colors.deepOrange,width: 2),
+                          borderRadius: BorderRadius.circular(20)),
+
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       fillColor: Colors.black54,
@@ -52,6 +58,10 @@ class LoginPage extends StatelessWidget {
                   controller: password,
                   obscureText: true,
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange,width: 2),
+                        borderRadius: BorderRadius.circular(20)),
+
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       fillColor: Colors.black54,
@@ -64,7 +74,7 @@ class LoginPage extends StatelessWidget {
                   width: 300,
                   child: ElevatedButton(
                       onPressed: () {
-                        logic.Login(email: email.text, password: password.text);
+                        logic.Login(context: context,email: email.text, password: password.text);
                       },
                       child: Text("Login")),
                 ),
