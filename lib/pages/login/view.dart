@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
                                   password: password.text);
                             },
                             child: logic.processing.value == true
-                                ? CircularProgressIndicator()
+                                ? SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: Colors.white,))
                                 : Text("Login"));
                       }),
                     ),

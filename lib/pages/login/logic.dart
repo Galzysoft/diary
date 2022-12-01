@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_dairy/pages/notes/view.dart';
 
 import 'state.dart';
 
@@ -13,10 +14,19 @@ class LoginLogic extends GetxController {
       required String password,
       required BuildContext context}) async {
     try {
-      processing.value=true;
+      processing.value = true;
       final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      processing.value=false;
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+         if  ( value.user.toString()!= null){
+           print("Logged in successfully ${value.user}");
+           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+             return  NotesPage();
+           },));
+            return processing.value = false;}
+          });
+
+      processing.value = false;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green,
           content: ListTile(
@@ -27,7 +37,7 @@ class LoginLogic extends GetxController {
           )));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        processing.value=false;
+        processing.value = false;
         print('No user found for that email.');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
@@ -38,7 +48,7 @@ class LoginLogic extends GetxController {
               title: Text("No user found for that email."),
             )));
       } else if (e.code == 'wrong-password') {
-        processing.value=false;
+        processing.value = false;
         print('Wrong password provided for that user.');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
