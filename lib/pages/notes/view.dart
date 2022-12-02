@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_dairy/pages/create_new_note/view.dart';
 
 import 'logic.dart';
 
@@ -82,24 +83,27 @@ class NotesPage extends StatelessWidget {
                         )),
                         Expanded(
                             child: Row(
-                              children: [
-                                Text(
-                                  "time",
-                                  style:
-                                  TextStyle(fontSize: 20,fontStyle: FontStyle.italic, color: Colors.white.withOpacity(0.9)),
-                                ),
-                              ],
-                            )),
+                          children: [
+                            Text(
+                              "time",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white.withOpacity(0.9)),
+                            ),
+                          ],
+                        )),
                         Expanded(
                             child: Row(
-                              children: [
-                                Text(
-                                  "cartegory",
-                                  style:
-                                  TextStyle(fontSize: 20, color: Colors.white.withOpacity(0.7)),
-                                ),
-                              ],
-                            ))
+                          children: [
+                            Text(
+                              "cartegory",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white.withOpacity(0.7)),
+                            ),
+                          ],
+                        ))
                       ]),
                     ),
                   )),
@@ -108,8 +112,15 @@ class NotesPage extends StatelessWidget {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateNewNotePage(),
+                ));
+          },
+          child: Icon(Icons.add)),
     );
   }
 }
