@@ -7,8 +7,8 @@ import 'logic.dart';
 class LoginPage extends StatelessWidget {
   final logic = Get.put(LoginLogic());
   final state = Get.find<LoginLogic>().state;
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController(text: "onyekaejims@gmail.com");
+  TextEditingController password = TextEditingController(text: "1234567890");
 final formkey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {

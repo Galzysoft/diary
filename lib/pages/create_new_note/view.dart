@@ -4,16 +4,35 @@ import 'package:get/get.dart';
 import 'logic.dart';
 
 class CreateNewNotePage extends StatelessWidget {
+  final String ?title;
+  final String ?note;
   final logic = Get.put(CreateNewNoteLogic());
   final state = Get.find<CreateNewNoteLogic>().state;
 
+   CreateNewNotePage({super.key, this.title="", this.note=""});
+
   @override
   Widget build(BuildContext context) {
+    logic.note.text=note!;
+    logic.title.text=title!;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            toolbarHeight: 80,
+            toolbarHeight: 80,actions: [ Obx(() {
+            return ElevatedButton(
+                onPressed: () {
+                  logic.createNewNote();
+                },
+                child: logic.processing.value == true
+                    ? SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ))
+                    : Text("submit note"));
+          })],
             flexibleSpace: Padding(
               padding: const EdgeInsets.only(left: 70.0, right: 16),
               child: Column(
@@ -33,67 +52,39 @@ class CreateNewNotePage extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-
                   ]),
             ),
-
           ),
-     SliverFillRemaining(
-       child: Padding(
-         padding: const EdgeInsets.all(8.0),
-         child: Column(children: [
+          SliverFillRemaining(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(children: [
+                TextFormField(controller: logic.title,
+                  style: TextStyle(color: Colors.black),
 
-           TextFormField(
-             style: TextStyle(color: Colors.white),
+                  // controller: password,
+                  // expands: true,
+                  maxLines: 2,
+                  decoration: InputDecoration(border: InputBorder.none,hintText: "Title"),
+                ),
 
-             // controller: password,
-             obscureText: true,
-             decoration: InputDecoration(
-                 enabledBorder: OutlineInputBorder(
-                     borderSide: BorderSide(
-                         color: Colors.deepOrange, width: 2),
-                     borderRadius: BorderRadius.circular(20)),
+                Divider(thickness: 5,),
+                Expanded(flex: 6,
+                  child: TextFormField(controller:logic. note,
+                    style: TextStyle(color: Colors.black),
 
-                 border: OutlineInputBorder(
-                     borderRadius: BorderRadius.circular(20)),
-                 fillColor: Colors.black54,
-                 filled: true),
-           ),
-           SizedBox(height: 10,),
-           TextFormField(
-             style: TextStyle(color: Colors.white),
+                    // controller: password,
+                    expands: true,
+                    maxLines: null,
+                    decoration: InputDecoration(border: InputBorder.none,hintText: "Enter Note"),
+                  ),
+                ),
 
-             // controller: password,
-             obscureText: true,
-             decoration: InputDecoration(
-                 enabledBorder: OutlineInputBorder(
-                     borderSide: BorderSide(
-                         color: Colors.deepOrange, width: 2),
-                     borderRadius: BorderRadius.circular(20)),
-
-                 border: OutlineInputBorder(
-                     borderRadius: BorderRadius.circular(20)),
-                 fillColor: Colors.black54,
-                 filled: true),
-           ),
-           SizedBox(height: 10,),
-           SizedBox(
-             width: 300,
-             child: Obx(() {
-               return ElevatedButton(
-                   onPressed: () {
-                     logic.createNewNote(title: "ada jesus",note: "onyedika");
-                   },
-                   child: logic.processing.value == true
-                       ? SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: Colors.white,))
-                       : Text("submit note"));
-             }),
-           ),
-         ]),
-       ),
-     )
+              ]),
+            ),
+          )
         ],
       ),
-       );
+    );
   }
 }

@@ -8,14 +8,16 @@ class SignupLogic extends GetxController {
   final SignupState state = SignupState();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
+  var processing = false.obs;
   Future signUp({required BuildContext context}) async {
     try {
+      processing.value = true;
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email.text,
         password: password.text,
       );
+      processing.value = false;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green,
           content: ListTile(
@@ -24,6 +26,7 @@ class SignupLogic extends GetxController {
 
 
     } on FirebaseAuthException catch (e) {
+      processing.value = false;
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
@@ -34,7 +37,7 @@ class SignupLogic extends GetxController {
               title: Text("The password provided is too weak."),
             )));
         print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
+      } else if (e.code == 'email-already-in-use') { processing.value = false;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.red,
             content: ListTile(
@@ -47,6 +50,7 @@ class SignupLogic extends GetxController {
         print('The account already exists for that email.');
       }
     } catch (e) {
+      processing.value = false;
       print(e);
     }
   }
